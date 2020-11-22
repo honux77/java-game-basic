@@ -1,4 +1,4 @@
-package net.honux.game;
+package net.honux.game.image;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
