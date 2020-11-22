@@ -1,22 +1,22 @@
-package net.honux.game;
+package net.honux.game.basic;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 
-public class Application extends JFrame {
+public class DonutApp extends JFrame {
 
-    public Application() {
+    public DonutApp() {
 
         initUI();
     }
 
     private void initUI() {
 
-        add(new Board());
+        add(new DonutBoard());
 
-        setSize(250, 200);
+        setSize(640, 480);
 
-        setTitle("Application");
+        setTitle("Draw Donut");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
@@ -24,7 +24,7 @@ public class Application extends JFrame {
     public static void main(String[] args) {
 
         EventQueue.invokeLater(() -> {
-            Application ex = new Application();
+            DonutApp ex = new DonutApp();
             ex.setVisible(true);
         });
     }
