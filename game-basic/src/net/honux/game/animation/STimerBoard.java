@@ -5,21 +5,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class STimerBoard extends JPanel
         implements ActionListener {
 
-    private final int B_WIDTH = 350;
-    private final int B_HEIGHT = 350;
-    private final int INITIAL_X = -40;
-    private final int INITIAL_Y = -40;
     private final int DELAY = 15;
 
     private Image star;
+    private Image bg;
     private Timer timer;
     private int x, y;
+    private int dx, dy;
 
     public STimerBoard() {
 
@@ -28,7 +27,10 @@ public class STimerBoard extends JPanel
 
     private void loadImage() {
         try {
-            star = ImageIO.read(new File("./resources/slime.jpg"));
+            star = ImageUtil.makeTransparent(
+                    ImageIO.read(new File("./resources/slime.png")));
+
+            bg = ImageIO.read(new File("./resources/starNight.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -39,12 +41,14 @@ public class STimerBoard extends JPanel
     private void initBoard() {
 
         setBackground(Color.BLACK);
-        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
-
         loadImage();
+        setPreferredSize(new Dimension(bg.getWidth(this), bg.getHeight(this)));
 
-        x = INITIAL_X;
-        y = INITIAL_Y;
+
+        x = this.getHeight() / 2;
+        y = this.getWidth() / 2;
+        dx = 3;
+        dy = 3;
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -54,24 +58,30 @@ public class STimerBoard extends JPanel
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        drawBackground(g);
         drawStar(g);
     }
 
-    private void drawStar(Graphics g) {
+    private void drawBackground(Graphics g) {
+        g.drawImage(bg, 0, 0, this);
+    }
 
+    private void drawStar(Graphics g) {
         g.drawImage(star, x, y, this);
         Toolkit.getDefaultToolkit().sync();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        x += 2;
-        y += 2;
+        x += dx;
+        y += dy;
 
-        if (y > B_HEIGHT) {
+        if (y < 0 ||  y > this.getHeight() - star.getHeight(this)) {
+            dy = -dy;
+        }
 
-            y = INITIAL_Y;
-            x = INITIAL_X;
+        if (x < 0 || x > this.getWidth() - star.getWidth(this)) {
+            dx = -dx;
         }
 
         repaint();

@@ -24,7 +24,7 @@ public class ThreadBoard extends JPanel implements Runnable{
 
     private void loadImage() {
         try {
-            star = ImageIO.read(new File("./resources/slime.jpg"));
+            star = ImageIO.read(new File("./resources/slime.png"));
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
