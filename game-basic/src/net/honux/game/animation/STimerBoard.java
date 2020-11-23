@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-public class Board extends JPanel
+public class STimerBoard extends JPanel
         implements ActionListener {
 
     private final int B_WIDTH = 350;
@@ -21,18 +21,22 @@ public class Board extends JPanel
     private Timer timer;
     private int x, y;
 
-    public Board() throws IOException {
+    public STimerBoard() {
 
         initBoard();
     }
 
-    private void loadImage() throws IOException {
-        //System.out.println(System.getProperty("user.dir"));
-        star = ImageIO.read(new File("./resources/slime.jpg"));
+    private void loadImage() {
+        try {
+            star = ImageIO.read(new File("./resources/slime.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
 
     }
 
-    private void initBoard() throws IOException {
+    private void initBoard() {
 
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));

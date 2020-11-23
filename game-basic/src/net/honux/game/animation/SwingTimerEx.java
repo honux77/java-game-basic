@@ -1,19 +1,16 @@
 package net.honux.game.animation;
 
 import java.awt.EventQueue;
-import java.io.IOException;
 import javax.swing.JFrame;
 
 public class SwingTimerEx extends JFrame {
 
-    public SwingTimerEx() throws IOException {
-
+    public SwingTimerEx() {
         initUI();
     }
 
-    private void initUI() throws IOException {
-
-        add(new Board());
+    private void initUI() {
+        add(new STimerBoard());
 
         setResizable(false);
         pack();
@@ -24,14 +21,8 @@ public class SwingTimerEx extends JFrame {
     }
 
     public static void main(String[] args) {
-
         EventQueue.invokeLater(() -> {
-            SwingTimerEx ex = null;
-            try {
-                ex = new SwingTimerEx();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            SwingTimerEx ex = new SwingTimerEx();
             ex.setVisible(true);
         });
     }
