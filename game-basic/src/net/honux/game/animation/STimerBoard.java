@@ -15,10 +15,12 @@ public class STimerBoard extends JPanel
     private final int DELAY = 15;
 
     private Image star;
+    private Image slimes;
     private Image bg;
     private Timer timer;
     private int x, y;
     private int dx, dy;
+    private int frame = 0;
 
     public STimerBoard() {
 
@@ -31,6 +33,9 @@ public class STimerBoard extends JPanel
                     ImageIO.read(new File("./resources/slime.png")));
 
             bg = ImageIO.read(new File("./resources/starNight.jpg"));
+            slimes = ImageUtil.makeTransparent(
+                    ImageIO.read(new File("./resources/slime_sprites.png")));
+
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -47,8 +52,8 @@ public class STimerBoard extends JPanel
 
         x = this.getHeight() / 2;
         y = this.getWidth() / 2;
-        dx = 3;
-        dy = 3;
+        dx = 2;
+        dy = 2;
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -59,15 +64,28 @@ public class STimerBoard extends JPanel
         super.paintComponent(g);
 
         drawBackground(g);
-        drawStar(g);
+        drawSlime(g);
+        frame++;
     }
 
     private void drawBackground(Graphics g) {
         g.drawImage(bg, 0, 0, this);
     }
 
-    private void drawStar(Graphics g) {
-        g.drawImage(star, x, y, this);
+    private void drawSlime(Graphics g) {
+
+        switch (frame % 60 / 20) {
+            case 0:
+                g.drawImage(slimes, x, y, x + 64, y + 50, 0, 0, 32, 25, this);
+                break;
+            case 1:
+                g.drawImage(slimes, x, y, x + 64, y + 42, 0, 36, 32, 57, this);
+                break;
+            case 2:
+                g.drawImage(slimes, x, y, x + 64, y + 44, 0, 66, 32, 88, this);
+                break;
+        }
+
         Toolkit.getDefaultToolkit().sync();
     }
 
@@ -76,11 +94,11 @@ public class STimerBoard extends JPanel
         x += dx;
         y += dy;
 
-        if (y < 0 ||  y > this.getHeight() - star.getHeight(this)) {
+        if (y < 0 ||  y > this.getHeight() - 32) {
             dy = -dy;
         }
 
-        if (x < 0 || x > this.getWidth() - star.getWidth(this)) {
+        if (x < 0 || x > this.getWidth() - slimes.getWidth(this)) {
             dx = -dx;
         }
 

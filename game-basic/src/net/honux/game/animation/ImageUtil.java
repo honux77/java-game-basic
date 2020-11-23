@@ -12,7 +12,7 @@ public class ImageUtil {
      * @return Transparent image
      */
     public static Image makeTransparent(BufferedImage src) {
-        int marker = src.getRGB(0, 0) | 0xFF000000;
+        int marker = src.getRGB(1, 1) | 0xFF000000;
         ImageFilter filter = new RGBImageFilter() {
             @Override
             public int filterRGB(int x, int y, int rgb) {
