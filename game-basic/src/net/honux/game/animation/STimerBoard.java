@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -14,33 +13,28 @@ public class STimerBoard extends JPanel
 
     private final int DELAY = 15;
 
-    private Image star;
     private Image slimes;
     private Image bg;
     private Timer timer;
     private int x, y;
-    private int dx, dy;
+    private int dx;
     private int frame = 0;
+    private int xn = 5;
 
     public STimerBoard() {
-
         initBoard();
     }
 
     private void loadImage() {
         try {
-            star = ImageUtil.makeTransparent(
-                    ImageIO.read(new File("./resources/slime.png")));
-
             bg = ImageIO.read(new File("./resources/starNight.jpg"));
             slimes = ImageUtil.makeTransparent(
-                    ImageIO.read(new File("./resources/slime_sprites.png")));
+                    ImageIO.read(new File("./resources/slime_sprites.png")), null);
 
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
         }
-
     }
 
     private void initBoard() {
@@ -50,10 +44,9 @@ public class STimerBoard extends JPanel
         setPreferredSize(new Dimension(bg.getWidth(this), bg.getHeight(this)));
 
 
-        x = this.getHeight() / 2;
-        y = this.getWidth() / 2;
-        dx = 2;
-        dy = 2;
+        x = 1;
+        y = 400;
+        dx = 3;
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -73,35 +66,20 @@ public class STimerBoard extends JPanel
     }
 
     private void drawSlime(Graphics g) {
-
-        switch (frame % 60 / 20) {
-            case 0:
-                g.drawImage(slimes, x, y, x + 64, y + 50, 0, 0, 32, 25, this);
-                break;
-            case 1:
-                g.drawImage(slimes, x, y, x + 64, y + 42, 0, 36, 32, 57, this);
-                break;
-            case 2:
-                g.drawImage(slimes, x, y, x + 64, y + 44, 0, 66, 32, 88, this);
-                break;
-        }
-
-        Toolkit.getDefaultToolkit().sync();
+        int hs = 28;
+        int w = 32;
+        int i = frame % 60 / 10;
+        g.drawImage(slimes, x, y, x + w * xn, y + hs * xn,
+                0, 32 * i, 32, 32 * i + hs, this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         x += dx;
-        y += dy;
 
-        if (y < 0 ||  y > this.getHeight() - 32) {
-            dy = -dy;
-        }
-
-        if (x < 0 || x > this.getWidth() - slimes.getWidth(this)) {
+        if (x < 0 || x > this.getWidth() - 32 * xn) {
             dx = -dx;
         }
-
         repaint();
     }
 }

@@ -15,7 +15,7 @@ public class SwingTimerEx extends JFrame {
         setResizable(false);
         pack();
 
-        setTitle("Star");
+        setTitle("Moving Slime");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

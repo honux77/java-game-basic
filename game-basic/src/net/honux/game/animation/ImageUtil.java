@@ -11,8 +11,15 @@ public class ImageUtil {
      * @param color The color of the image want to make transparent
      * @return Transparent image
      */
-    public static Image makeTransparent(BufferedImage src) {
-        int marker = src.getRGB(1, 1) | 0xFF000000;
+    public static Image makeTransparent(BufferedImage src, Color color) {
+
+        int marker;
+        if (color == null) {
+            marker = src.getRGB(1, 1) | 0xFF000000;
+        } else {
+            marker = color.getRGB() | 0xFF000000;
+        }
+
         ImageFilter filter = new RGBImageFilter() {
             @Override
             public int filterRGB(int x, int y, int rgb) {
