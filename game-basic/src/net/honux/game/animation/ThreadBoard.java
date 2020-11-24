@@ -14,7 +14,7 @@ public class ThreadBoard extends JPanel implements Runnable{
     private final int INITIAL_Y = -40;
     private final int DELAY = 16;
 
-    private Image star;
+    private Image slime;
     private Thread animator;
     private int x, y;
 
@@ -24,7 +24,7 @@ public class ThreadBoard extends JPanel implements Runnable{
 
     private void loadImage() {
         try {
-            star = ImageIO.read(new File("./resources/slime.png"));
+            slime = ImageUtil.makeTransparent(ImageIO.read(new File("./resources/slime.png")), null);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -53,12 +53,12 @@ public class ThreadBoard extends JPanel implements Runnable{
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        drawStar(g);
+        drawSlime(g);
     }
 
-    private void drawStar(Graphics g) {
+    private void drawSlime(Graphics g) {
 
-        g.drawImage(star, x, y, this);
+        g.drawImage(slime, x, y, this);
         Toolkit.getDefaultToolkit().sync();
     }
 
